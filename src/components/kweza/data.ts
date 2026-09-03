@@ -2,14 +2,12 @@ export type PlayerState =
   | "ranked_paying"
   | "ranked_not_paying"
   | "not_on_board_yet"
-  | "all_done_today"
   | "free_player";
 
 export const playerStateLabels: Record<PlayerState, string> = {
   ranked_paying: "Ranked, paying",
   ranked_not_paying: "Ranked, not paying",
   not_on_board_yet: "Not on the board yet",
-  all_done_today: "All done today",
   free_player: "Free player",
 };
 
@@ -77,22 +75,6 @@ export function statusModel(state: PlayerState): StatusModel {
         progress: 0,
         progressCaption: "Your first solve puts you on the board",
         streak: 5,
-        button: null,
-        freeLeft: null,
-      };
-    case "all_done_today":
-      return {
-        headline: "You are 12th this week",
-        support: "Every puzzle available today is done. New puzzles land tomorrow.",
-        rank: "12",
-        points: "1,840",
-        prizeLabel: "₦2,000",
-        prizeCaption: "Your position pays",
-        nextLabel: "Done for today",
-        nextPrize: null,
-        progress: 1,
-        progressCaption: "Done for today",
-        streak: 6,
         button: null,
         freeLeft: null,
       };
