@@ -6,7 +6,7 @@ import type { PlayerState } from "./data";
  * typography, spacing and one accent only.
  */
 
-export const spaceVariantLabels = ["A", "B", "C", "D", "E", "F", "G"];
+export const spaceVariantLabels = ["5a", "5b", "5c", "5d", "5e", "5f", "5g"];
 
 export const spaceVariantCaptions: Record<number, string> = {
   0: "One instruction line at reading size with the money folded into a quieter second line underneath.",
