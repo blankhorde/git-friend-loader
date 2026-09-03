@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { statusModel, playerStateLabels, type PlayerState } from "@/components/kweza/data";
 import { StatusCard, statusCaptions } from "@/components/kweza/status";
+import {
+  spaceVariantLabels,
+  spaceVariantCaptions,
+} from "@/components/kweza/status-space";
 import { Announcements, announcementCaptions } from "@/components/kweza/announcements";
 import { Puzzles, puzzleCaptions } from "@/components/kweza/puzzles";
 
@@ -142,7 +146,8 @@ function TabBar() {
 
 function Index() {
   const [comp, setComp] = useState(0);
-  const [statusOpt, setStatusOpt] = useState(0);
+  const [statusOpt, setStatusOpt] = useState(4);
+  const [spaceVariant, setSpaceVariant] = useState(0);
   const [annOpt, setAnnOpt] = useState(0);
   const [puzOpt, setPuzOpt] = useState(0);
   const [state, setState] = useState<PlayerState>("ranked_paying");
@@ -152,8 +157,18 @@ function Index() {
 
   const status = (
     <div>
-      <StatusCard option={statusOpt} m={m} state={state} countdown={countdown} />
-      <Caption>{statusCaptions[statusOpt]!}</Caption>
+      <StatusCard
+        option={statusOpt}
+        spaceVariant={spaceVariant}
+        m={m}
+        state={state}
+        countdown={countdown}
+      />
+      <Caption>
+        {statusOpt === 4
+          ? `Option 5 · variant ${spaceVariantLabels[spaceVariant]} — ${spaceVariantCaptions[spaceVariant]}`
+          : statusCaptions[statusOpt]!}
+      </Caption>
     </div>
   );
   const ann = (
@@ -200,6 +215,12 @@ function Index() {
             options={["1", "2", "3", "4", "5"]}
             value={statusOpt}
             onChange={setStatusOpt}
+          />
+          <Segmented
+            label="Option 5 — space under the meter"
+            options={spaceVariantLabels}
+            value={spaceVariant}
+            onChange={setSpaceVariant}
           />
           <Segmented
             label="Announcements"
