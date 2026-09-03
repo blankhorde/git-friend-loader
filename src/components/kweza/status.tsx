@@ -1,4 +1,5 @@
 import type { PlayerState, StatusModel } from "./data";
+import { StatusSpace } from "./status-space";
 
 export const statusOptionLabels = ["1", "2", "3", "4", "5"];
 export const statusCaptions: Record<number, string> = {
@@ -6,7 +7,7 @@ export const statusCaptions: Record<number, string> = {
   1: "A receipt of plain-language lines with no box, so the week reads as facts rather than a widget.",
   2: "A dark plate carries the position and the countdown; the pale shelf under it carries what is next.",
   3: "The whole thing is written as a sentence, with the numbers set large inside the text.",
-  4: "A band meter shows where the paid positions end and where the player sits against them.",
+  4: "A band meter shows where the paid positions end and where the player sits against them; the space under it is switchable.",
 };
 
 type Props = {
@@ -216,7 +217,7 @@ function StatusD({ m, countdown }: Props) {
 }
 
 /* 5 — band meter, long prize labels */
-function StatusE({ m, state, countdown }: Props) {
+function StatusE({ m, state, countdown, spaceVariant = 0 }: Props & { spaceVariant?: number }) {
   const pct = Math.max(m.progress * 100, 4);
   return (
     <section className="rounded-2xl border border-border p-4">
@@ -245,20 +246,7 @@ function StatusE({ m, state, countdown }: Props) {
       </div>
       )}
 
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <div className="rounded-xl bg-muted p-3">
-          <p className="text-[11px] text-muted-foreground">{m.prizeCaption}</p>
-          <p className="mt-1 break-words text-[15px] font-bold leading-tight">
-            {m.prizeLabel ?? "Nothing yet"}
-          </p>
-        </div>
-        <div className="rounded-xl bg-brand-soft p-3">
-          <p className="text-[11px] text-muted-foreground">{m.nextLabel}</p>
-          <p className="mt-1 break-words text-[15px] font-bold leading-tight">
-            {m.nextPrize ?? (state === "free_player" ? "Subscribe to earn points" : "Take a position")}
-          </p>
-        </div>
-      </div>
+      <StatusSpace variant={spaceVariant} state={state} />
 
       <Action label={m.button} />
       <div className="mt-3 flex items-center justify-between">
@@ -275,8 +263,13 @@ function ordinal(rank: string) {
   return ["th", "st", "nd", "rd"][n % 10] ?? "th";
 }
 
-export function StatusCard({ option, ...p }: Props & { option: number }) {
-  const all = [StatusA, StatusB, StatusC, StatusD, StatusE];
+export function StatusCard({
+  option,
+  spaceVariant = 0,
+  ...p
+}: Props & { option: number; spaceVariant?: number }) {
+  if (option === 4) return <StatusE {...p} spaceVariant={spaceVariant} />;
+  const all = [StatusA, StatusB, StatusC, StatusD];
   const C = all[option] ?? StatusA;
   return <C {...p} />;
 }
