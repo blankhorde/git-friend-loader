@@ -6,7 +6,7 @@ import type { PlayerState } from "./data";
  * typography, spacing and one accent only.
  */
 
-export const spaceVariantLabels = ["5a", "5b", "5c", "5d", "5e", "5f", "5g"];
+export const spaceVariantLabels = ["5a", "5b", "5c", "5d", "5e", "5f", "5g", "5h", "5i"];
 
 export const spaceVariantCaptions: Record<number, string> = {
   0: "One instruction line at reading size with the money folded into a quieter second line underneath.",
@@ -16,6 +16,8 @@ export const spaceVariantCaptions: Record<number, string> = {
   4: "Hairline label-and-value rows read like a quiet fact sheet, no container around them.",
   5: "A single accent rule on the left holds a short promise line and its Sunday condition.",
   6: "A small overline names the step, a short headline states it, and the condition trails behind.",
+  7: "Same next-step content as 5g, gathered into one soft, filled container so it reads as a single object.",
+  8: "Same next-step content as 5g, gathered into one hairline-outlined container to compare against the fill.",
 };
 
 type Lines = {
@@ -201,6 +203,52 @@ const V: Array<Record<PlayerState, Lines>> = [
       sub: "Points and a weekly position start the moment you compete.",
     },
   },
+  // H — 5g content inside a soft, filled container
+  {
+    ranked_paying: {
+      over: "Next step",
+      lead: "10th, 60 points away",
+      sub: "Pays ₦5,000 to whoever holds it on Sunday. From 12th you would take ₦2,000.",
+    },
+    ranked_not_paying: {
+      over: "Next step",
+      lead: "50th, 120 points away",
+      sub: "The last paid position: 5GB data plus ₦2,000 on Sunday.",
+    },
+    not_on_board_yet: {
+      over: "First step",
+      lead: "Solve one puzzle",
+      sub: "That gives you a position, and positions 1 to 50 are paid on Sunday.",
+    },
+    free_player: {
+      over: "Today",
+      lead: "2 free puzzles left",
+      sub: "Points and a weekly position start the moment you compete.",
+    },
+  },
+  // I — 5g content inside a hairline-outlined container
+  {
+    ranked_paying: {
+      over: "Next step",
+      lead: "10th, 60 points away",
+      sub: "Pays ₦5,000 to whoever holds it on Sunday. From 12th you would take ₦2,000.",
+    },
+    ranked_not_paying: {
+      over: "Next step",
+      lead: "50th, 120 points away",
+      sub: "The last paid position: 5GB data plus ₦2,000 on Sunday.",
+    },
+    not_on_board_yet: {
+      over: "First step",
+      lead: "Solve one puzzle",
+      sub: "That gives you a position, and positions 1 to 50 are paid on Sunday.",
+    },
+    free_player: {
+      over: "Today",
+      lead: "2 free puzzles left",
+      sub: "Points and a weekly position start the moment you compete.",
+    },
+  },
 ];
 
 function Emphasised({ text }: { text: string }) {
@@ -306,6 +354,26 @@ export function StatusSpace({
   if (variant === 6) {
     return (
       <div className="mt-5">
+        <p className="text-[11px] font-medium tracking-wide text-brand">{l.over}</p>
+        <p className="mt-1 text-[16px] font-bold leading-snug">{l.lead}</p>
+        <p className="mt-1 text-[12px] leading-snug text-muted-foreground">{l.sub}</p>
+      </div>
+    );
+  }
+
+  if (variant === 7) {
+    return (
+      <div className="mt-5 rounded-2xl bg-muted p-4">
+        <p className="text-[11px] font-medium tracking-wide text-brand">{l.over}</p>
+        <p className="mt-1 text-[16px] font-bold leading-snug">{l.lead}</p>
+        <p className="mt-1 text-[12px] leading-snug text-muted-foreground">{l.sub}</p>
+      </div>
+    );
+  }
+
+  if (variant === 8) {
+    return (
+      <div className="mt-5 rounded-2xl border border-border p-4">
         <p className="text-[11px] font-medium tracking-wide text-brand">{l.over}</p>
         <p className="mt-1 text-[16px] font-bold leading-snug">{l.lead}</p>
         <p className="mt-1 text-[12px] leading-snug text-muted-foreground">{l.sub}</p>
